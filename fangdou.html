@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点击</button>
+</body>
+<script>
+// 防抖 
+function fangdou(fn,d){
+    var delay = d || 600
+    var timer ;
+    return function(){
+        var _this =this ;
+        var arg =arguments;
+        if(timer){
+            clearTimeout(timer)
+        }
+        timer =setTimeout(function(){
+            timer =null;
+            fn.apply(_this,arg)
+        },delay)
+    }
+}
+//节流
+function jieliu(fn,d){
+    var delay = d || 600
+    var timer;
+    var last;
+    return function(){
+        var _this =this ;
+        var arg =arguments;
+        var now = +new Date();
+        if(last && now-last <delay){
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                        last = now;
+                        fn.apply(_this, arg);
+                    }, delay);
+        }else{
+            last = now
+            fn.apply(_this, arg);
+        }
+}
+}
+// 时间戳
+    // btn.onclick=function(){
+    //     console.log(111)
+    // }
+    // btn.onclick=fangdou(function(){
+    //     console.log(111,this)
+    // },500)
+
+       btn.onclick=jieliu(function(){
+        console.log(111,this)
+    },1000)
+</script>
+
+</html>
