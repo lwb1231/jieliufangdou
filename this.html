@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>改变this指针</title>
+</head>
+<body>
+    <button class="ssss">sssss</button>
+</body>
+<script>
+    function fun(a,b){
+        console.log('a='+a,'b='+b)
+        console.log(this)
+    }
+    var obj ={
+        name:'obj',
+        sayName:function(c,d){
+            console.log(c,d)
+            console.log(this)
+        }
+    };
+    fun(12,6)
+    obj.sayName(1,2)
+
+
+    function foo(){
+        console.log(this)
+    }
+    var f= foo.call(obj)
+    console.log(f,this)
+
+var Pet = {
+words: '...',
+speak: function (say) {
+console.log(say + '' + this.words)
+}
+}
+Pet.speak('123') //输出123...
+var Dog = {
+words: 'WangWangWang'
+}
+Pet.speak.call(Dog,'123') //输出123WangWangWang
+
+
+var p = {
+    wad:'人'
+    ,b:function(say){
+        console.log(say+this.wad)
+    }
+}
+p.b('傻')
+
+var doc={
+    wad:'猜猜'
+}
+p.b.call(doc,'我是谁')
+
+// bind
+// function fn(a, b, c) {
+// console.log(a, b, c);
+// }
+// var fn1 = fn.bind(null, 'Dot');
+// fn('A', 'B', 'C'); //A B C
+// fn1('A', 'B', 'C');           // Dot A B
+// fn1('B', 'C');                // Dot B C
+// fn.call(null, 'Dot');      // Dot undefined undefined
+
+function fn(a,b,c){
+    console.log(a,b,c)
+}
+var fn1 =fn.bind(null,'odt')
+fn('A','B','C')
+fn1('A','B','C')
+fn1('B','C')
+fn.call(null,'odt')
+</script>
+</html>

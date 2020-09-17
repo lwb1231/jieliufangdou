@@ -7,56 +7,58 @@
 </head>
 <body>
     <button id="btn">点击</button>
+    <button id="btn1">点击</button>
+    <button id="btn2">点击</button>
 </body>
 <script>
-// 防抖 
-function fangdou(fn,d){
-    var delay = d || 600
-    var timer ;
-    return function(){
-        var _this =this ;
-        var arg =arguments;
-        if(timer){
-            clearTimeout(timer)
+    // 防抖
+    function fd(fn,d){
+        var delay = d || 600
+        var timer;
+        return function(){
+            var _this = this;
+            var arg = arguments;
+            if(timer){
+                clearTimeout(timer)
+            }
+            timer = setTimeout(function(){
+                timer = null;
+                fn,apply(_this,arg)
+            },delay)
         }
-        timer =setTimeout(function(){
-            timer =null;
-            fn.apply(_this,arg)
-        },delay)
     }
-}
-//节流
-function jieliu(fn,d){
-    var delay = d || 600
-    var timer;
-    var last;
-    return function(){
-        var _this =this ;
-        var arg =arguments;
-        var now = +new Date();
-        if(last && now-last <delay){
-            clearTimeout(timer);
-            timer = setTimeout(function() {
+    btn.onclick=function(){
+        console.log(111)
+    }
+    // 节流
+    function jl(fn,d){
+        var delay = d ||600
+        var timer;
+        var last;
+        return function(){
+            var _this =this;
+            var arg= arguments;
+            var now = +new Date();
+            if(last && now-last <delay){
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                   
                         last = now;
-                        fn.apply(_this, arg);
-                    }, delay);
-        }else{
-            last = now
-            fn.apply(_this, arg);
+                        fn.apply(_this,arg);
+                    },delay)
+            }else{
+                last=now
+                fn.apply(_this,arg)
+            }
         }
-}
-}
-// 时间戳
-    // btn.onclick=function(){
-    //     console.log(111)
-    // }
-    // btn.onclick=fangdou(function(){
-    //     console.log(111,this)
-    // },500)
-
-       btn.onclick=jieliu(function(){
+    }
+    btn1.onclick=jl(function(){
         console.log(111,this)
     },1000)
-</script>
 
+
+
+
+
+</script>
 </html>
